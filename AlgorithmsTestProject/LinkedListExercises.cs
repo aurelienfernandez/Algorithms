@@ -37,6 +37,7 @@ namespace AlgorithmsTestProject
         public static IList<T> Reverse<T>()
         {
             throw new NotImplementedException();
+
         }
 
         public static IEnumerable<T> Enumerate<T>(this IList<T> self)
