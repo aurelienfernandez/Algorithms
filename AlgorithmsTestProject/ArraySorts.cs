@@ -4,33 +4,29 @@
     {
         public static void MySort1(int[] array)
         {
-            Dictionary<int, string> DigitDictionary = new Dictionary<int, string>
-            {   {0,"zero"},{1,"one"},{2,"two"},{3,"three"},{4,"four"},
-                {5,"five"},{6,"six"},{7,"seven"},{8,"eight"},{9,"nine"}};
-
-            var result = new int[array.Length];
-            List<List<string>> DigitsList = new List<List<string>>();
-
-            foreach (int element in array)
+            for (var i = 0; i < array.Length; i++)
             {
-                List<string> Digits = new List<string> { };
-                foreach (char digit in element.ToString())
+                for (var j = i + 1; j < array.Length; j++)
                 {
-                    Digits.Add(DigitDictionary[int.Parse(digit.ToString())]);
+                    if (array[j] < array[i])
+                    {
+                        ArrayProblems.Swap(array, i, j);
+                    }
                 }
-                DigitsList.Add(Digits);
-
-
             }
-            DigitsList.Sort((a, b) => a.Count().CompareTo(b.Count()));
-
-
-
         }
 
         public static void MySort2(int[] array)
         {
-            throw new NotImplementedException();
+            var current = array.ToList();
+            var result = new List<int>();
+            while (current.Count > 0)
+            {
+                var x = current.Min();
+                result.Add(x);
+                current.Remove(x);
+            }
+            result.CopyTo(array);
         }
 
         public static void MergeSort(int[] array)
@@ -45,7 +41,24 @@
 
         public static void BubbleSort(int[] array)
         {
-            throw new NotImplementedException();
+            bool swapped;
+            var n = array.Length;
+            do
+            {
+                swapped = false;
+
+                for (var i = 1; i < n; ++i)
+                {
+                    if (array[i - 1] > array[i])
+                    {
+                        ArrayProblems.Swap(array, i-1, i);
+                        swapped = true;
+                    }
+                }
+
+                --n;
+            } 
+            while (swapped && n > 0);
         }
 
         public static void ShuffleSort(int[] array)
@@ -113,6 +126,15 @@
         public static void EvilSort(int[] array)
         {
             Array.Fill(array, 0);
+        }
+
+        public static void GnomeSort(int[] array)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void SelectionSort(int[] array)
+        {
         }
     }
 }
