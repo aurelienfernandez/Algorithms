@@ -1,21 +1,44 @@
-﻿
-namespace AlgorithmsTestProject
+﻿namespace AlgorithmsTestProject
 {
     public class Stack<T> : IStack<T>
     {
+        private int top = 0;
+        private int size;
+
+        private T[] stack;
+
+        public Stack(int size = 10)
+        {
+            this.size = size;
+            stack = new T[size];
+        }
+
+
         public void Push(T x)
         {
-            throw new NotImplementedException();
+            if (top > size)
+            {
+                throw new Exception("Stack overflow");
+            }
+            else
+            {
+                stack[top] = x;
+            }
+            top++;
         }
 
         public T Pop()
         {
-            throw new NotImplementedException();
+            var element = stack[top-1];
+            top--;
+            return element;
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            var tmp = this.Pop();
+            this.Push(tmp);
+            return tmp;
         }
 
         public bool IsEmpty { get; }
@@ -23,19 +46,32 @@ namespace AlgorithmsTestProject
 
     public class Queue<T> : IQueue<T>
     {
+        private int top = -1;
+        private int size;
+
+        private List<T> queue;
+
+        public Queue()
+        {
+            queue = new List<T> { };
+        }
+
         public void Enqueue(T x)
         {
-            throw new NotImplementedException();
+            queue.Insert(0, x);
         }
 
         public T Dequeue()
         {
-            throw new NotImplementedException();
+            var tmp = queue.Last();
+            queue.Remove(queue.Last());
+            return tmp;
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            
+            return queue.Last();
         }
 
         public bool IsEmpty { get; }
@@ -43,22 +79,45 @@ namespace AlgorithmsTestProject
 
     public class PriorityQueue<T> : IPriorityQueue<T>
     {
+
+        private int top = -1;
+        private int size;
+
+        private List<(T,int)> priorityQueue;
+
+        public PriorityQueue()
+        {
+            priorityQueue = new List<(T,int)> { };
+        }
+
+        public bool IsEmpty { get; }
+
         public void Enqueue(int priority, T element)
         {
-            throw new NotImplementedException();
+            priorityQueue.Insert(0,(element, priority));
         }
 
         public T PeekHighestPriority()
         {
-            throw new NotImplementedException();
+            if (priorityQueue.Count == 0)
+            {
+                throw new Exception("empty queue");
+
+            }
+            else
+            {
+                var result=priorityQueue.Max(t=>t.Item1);
+                return result;
+            }
         }
 
         public T DequeueHighestPriority()
         {
-            throw new NotImplementedException();
+            var result = priorityQueue.Max(t => t.Item1);
+            var remove = priorityQueue.Max();
+            priorityQueue.Remove(remove);
+            return result;
         }
-
-        public bool IsEmpty => throw new NotImplementedException();
     }
 
     public class QueueFromStack<T> : IQueue<T>
