@@ -41,7 +41,14 @@
             return tmp;
         }
 
-        public bool IsEmpty { get; }
+        public bool IsEmpty
+        {
+            get
+            {
+                var iter = memberList.GetIterator();
+                return !iter.HasValue();
+            }
+        }
     }
 
     public class Queue<T> : IQueue<T>
